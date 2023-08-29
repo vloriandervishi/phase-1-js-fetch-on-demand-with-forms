@@ -1,5 +1,19 @@
 const init = () => {
-  
-}
+  const form = document.querySelector("form");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const getID = e.target.children[1].value;
 
-document.addEventListener('DOMContentLoaded', init);
+    fetch(`http://localhost:3000/movies/${getID}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const title = document.querySelector("section#movieDetails h4");
+        const summary = document.querySelector("section#movieDetails p");
+        title.innerText = data.title;
+        summary.innerText = data.summary;
+        console.log(title, summary);
+      });
+  });
+};
+
+document.addEventListener("DOMContentLoaded", init);
